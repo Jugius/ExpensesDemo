@@ -48,11 +48,11 @@
             <TextBlock Grid.Column="0" Grid.Row="3" Text="Минимум:"/>
             <TextBlock Grid.Column="0" Grid.Row="4" Text="Максимум:"/>
 
-            <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource StatisticIndicator}" d:Text="100" Text="{Binding CountOfExpenses}"/>
-            <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource StatisticIndicator}" d:Text="100" Text="{Binding SummaOfExpenses}"/>
-            <TextBlock Grid.Column="1" Grid.Row="2" Style="{StaticResource StatisticIndicator}" d:Text="100" Text="{Binding AverageOfExpenses}"/>
-            <TextBlock Grid.Column="1" Grid.Row="3" Style="{StaticResource StatisticIndicator}" d:Text="100" Text="{Binding MinimumExpense}"/>
-            <TextBlock Grid.Column="1" Grid.Row="4" Style="{StaticResource StatisticIndicator}" d:Text="100" Text="{Binding MaximumExpense}"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" Style="{StaticResource StatisticIndicator}" d:Text="100" Text="{Binding CountOfExpenses, StringFormat={}{0:# ###}}"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" Style="{StaticResource StatisticIndicator}" d:Text="100" Text="{Binding SummaOfExpenses, StringFormat={}{0:# ###.00}}"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" Style="{StaticResource StatisticIndicator}" d:Text="100" Text="{Binding AverageOfExpenses, StringFormat={}{0:# ###.00}}"/>
+            <TextBlock Grid.Column="1" Grid.Row="3" Style="{StaticResource StatisticIndicator}" d:Text="100" Text="{Binding MinimumExpense, StringFormat={}{0:# ###.00}}"/>
+            <TextBlock Grid.Column="1" Grid.Row="4" Style="{StaticResource StatisticIndicator}" d:Text="100" Text="{Binding MaximumExpense, StringFormat={}{0:# ###.00}}"/>
         </Grid>
         
         
