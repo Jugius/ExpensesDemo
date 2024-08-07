@@ -13,8 +13,9 @@ internal class MainWindowVM : ViewModelBase
     private readonly ExpensesStore _expensesStore;
     private ExpenseViewModel selectedExpenseViewModel;
 
-    public ReadOnlyObservableCollection<ExpenseViewModel> ExpenseViewModels { get; }
+    public IEnumerable<ExpenseViewModel> ExpenseViewModels { get; }
     public ExpenseViewModel SelectedExpenseViewModel { get => selectedExpenseViewModel; set => Set(ref selectedExpenseViewModel, value); }
+    public LoadExpensesCommand LoadExpensesCommand { get; }
     public AddExpenseCommand AddExpenseCommand { get; }
     public EditExpenseCommand EditExpenseCommand { get; }
     public DeleteExpenseCommand DeleteExpenseCommand { get; }
@@ -27,11 +28,19 @@ internal class MainWindowVM : ViewModelBase
         AddExpenseCommand = new AddExpenseCommand(dialogService, expensesStore);
         EditExpenseCommand = new EditExpenseCommand(dialogService, expensesStore);
         DeleteExpenseCommand = new DeleteExpenseCommand(dialogService, expensesStore);
+        LoadExpensesCommand = new LoadExpensesCommand(dialogService, expensesStore);
+
+        _expenseViewModels.CollectionChanged += ExpenseViewModels_CollectionChanged;
 
         _expensesStore.ExpensesLoaded += ExpensesStore_ExpensesLoaded;
         _expensesStore.ExpenseAdded += ExpensesStore_ExpenseAdded;
         _expensesStore.ExpenseUpdated += ExpensesStore_ExpenseUpdated;
         _expensesStore.ExpenseDeleted += ExpensesStore_ExpenseDeleted;
+    }
+
+    private void ExpenseViewModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(ExpenseViewModels));
     }
 
     private void ExpensesStore_ExpenseDeleted(int id)
@@ -78,5 +87,11 @@ internal class MainWindowVM : ViewModelBase
         _expensesStore.ExpenseDeleted -= ExpensesStore_ExpenseDeleted;
 
         base.Dispose();
+    }
+    public static MainWindowVM LoadViewModel(DialogProvider dialogService, ExpensesStore expensesStore)
+    {
+        MainWindowVM viewModel = new MainWindowVM(dialogService, expensesStore);
+        viewModel.LoadExpensesCommand.Execute(null);
+        return viewModel;
     }
 }

@@ -19,8 +19,8 @@ public partial class App : System.Windows.Application
         string file = Path.Combine(Environment.CurrentDirectory, "ExpensesDataset.json");
         JsonFileExpensesService expensesService = new JsonFileExpensesService(file);
         ExpensesStore store = new ExpensesStore(expensesService);
-        MainWindowVM mainWindowViewModel = new MainWindowVM(dialogService, store);
-        this.MainWindow.DataContext = mainWindowViewModel;
+        var viewModel = MainWindowVM.LoadViewModel(dialogService, store);
+        this.MainWindow.DataContext = viewModel;
         this.MainWindow.Show();
         base.OnStartup(e);
     }

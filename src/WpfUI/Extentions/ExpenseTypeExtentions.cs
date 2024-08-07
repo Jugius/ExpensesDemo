@@ -5,6 +5,7 @@ internal static class ExpenseTypeExtentions
 {
     public static string ToValueString(this ExpenseType type) => type switch
     {
+        ExpenseType.None => "None",
         ExpenseType.HouseholdGoods => "Товары для дома",
         ExpenseType.UtilityBills => "Коммунальные услуги",
         ExpenseType.Groceries => "Продукты",

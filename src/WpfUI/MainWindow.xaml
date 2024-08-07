@@ -5,8 +5,73 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExpensesDemo.WpfUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Expenses Demo" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <WrapPanel  Height="Auto">
+            <Button Command="{Binding AddExpenseCommand}" Margin="2" Background="Transparent" BorderBrush="Transparent">
+                <Image Source="Resources/icon_add_48px.png" Stretch="Fill" Width="24" Height="24"/>
+            </Button>
+            <Button Command="{Binding EditExpenseCommand}" CommandParameter="{Binding ElementName=expensesList, Path=SelectedItem}" Margin="2" Background="Transparent" BorderBrush="Transparent">
+                <Image Source="Resources/icon_edit_48px.png" Stretch="Fill" Width="24" Height="24"/>
+            </Button>
+            <Button Command="{Binding DeleteExpenseCommand}" CommandParameter="{Binding ElementName=expensesList, Path=SelectedItem}" Margin="2" Background="Transparent" BorderBrush="Transparent">
+                <Image Source="Resources/icon_remove_48px.png" Stretch="Fill" Width="24" Height="24"/>
+            </Button>
+            <Border Width="1" Background="LightGray" Margin="0,2"/>
+        </WrapPanel>
+
+        <ListView Name="expensesList" Grid.Row="1"
+                  BorderThickness="0.1"
+                  ItemsSource="{Binding ExpenseViewModels}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  SelectedItem="{Binding SelectedExpenseViewModel}"
+                  SelectionMode="Single">
+                  
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />                   
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Дата" Width="100">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Left" Text="{Binding PaymentTime}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Тип затрат" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Left" Text="{Binding Type}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Сумма" Width="75">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Left" Text="{Binding Amount}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Описание">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock HorizontalAlignment="Left" Text="{Binding Description}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+
+        </ListView>
 
     </Grid>
 </Window>

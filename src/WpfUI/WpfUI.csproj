@@ -7,7 +7,14 @@
     <UseWPF>true</UseWPF>
     <RootNamespace>ExpensesDemo.WpfUI</RootNamespace>
     <AssemblyName>ExpensesDemo</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\icon_add_48px.png" />
+    <None Remove="Resources\icon_edit_48px.png" />
+    <None Remove="Resources\icon_remove_48px.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="..\..\GlobalSuppressions.cs" Link="GlobalSuppressions.cs" />
@@ -15,6 +22,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\icon_add_48px.png" />
+    <Resource Include="Resources\icon_edit_48px.png" />
+    <Resource Include="Resources\icon_remove_48px.png" />
   </ItemGroup>
 
 </Project>

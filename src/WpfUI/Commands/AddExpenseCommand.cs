@@ -8,7 +8,7 @@ internal class AddExpenseCommand(DialogProvider dialogProvider, ExpensesStore ex
 {
     public override async Task ExecuteAsync(object parameter)
     {
-        var dto = new ExpenseDto();
+        var dto = ExpenseDto.Create();
         if (!dialogProvider.ShowAddEditExpenseDialog(dto)) return;
 
         try

@@ -1,4 +1,6 @@
 ﻿using ExpensesDemo.Application.Common.DTOs;
+using ExpensesDemo.WpfUI.ViewModels;
+using ExpensesDemo.WpfUI.Views;
 using System.Windows;
 
 namespace ExpensesDemo.WpfUI.Services;
@@ -32,6 +34,8 @@ class DialogProvider
 
     internal bool ShowAddEditExpenseDialog(ExpenseDto dto)
     {
-        throw new NotImplementedException();
+        var dlg = new AddEditExpenseDialog() { Owner = DialogsOwner };
+        dlg.DataContext = new AddEditExpenseDialogVM(dlg, dto);
+        return dlg.ShowDialog().GetValueOrDefault(false);
     }
 }
