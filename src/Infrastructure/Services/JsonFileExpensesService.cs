@@ -32,7 +32,7 @@ public class JsonFileExpensesService : IExpensesService
 
         expense.Id = allRecords.Count > 0
             ? allRecords.Max(x => x.Id) + 1
-            : 0;
+            : 1;
 
         _buffered.Add(expense);
 
@@ -76,10 +76,15 @@ public class JsonFileExpensesService : IExpensesService
     }
     private static async Task<List<Expense>> LoadFromFile(string filePath)
     {
-        using (var stream = File.OpenRead(filePath))
+        if (File.Exists(filePath))
         {
-            return await System.Text.Json.JsonSerializer.DeserializeAsync<List<Expense>>(stream);
-        }        
+            using (var stream = File.OpenRead(filePath))
+            {
+                return await System.Text.Json.JsonSerializer.DeserializeAsync<List<Expense>>(stream);
+            }
+        }
+
+        return new List<Expense>();
     }
     private static async Task SaveToFile(List<Expense> expenses, string filePath)
     {
