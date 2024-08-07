@@ -19,6 +19,7 @@ internal class MainWindowVM : ViewModelBase
     public AddExpenseCommand AddExpenseCommand { get; }
     public EditExpenseCommand EditExpenseCommand { get; }
     public DeleteExpenseCommand DeleteExpenseCommand { get; }
+    public StatisticControlVM Statistic {  get; }
     public MainWindowVM(DialogProvider dialogService, ExpensesStore expensesStore)
     {
         _expensesStore = expensesStore;
@@ -29,6 +30,7 @@ internal class MainWindowVM : ViewModelBase
         EditExpenseCommand = new EditExpenseCommand(dialogService, expensesStore);
         DeleteExpenseCommand = new DeleteExpenseCommand(dialogService, expensesStore);
         LoadExpensesCommand = new LoadExpensesCommand(dialogService, expensesStore);
+        Statistic = new StatisticControlVM(this);
 
         _expenseViewModels.CollectionChanged += ExpenseViewModels_CollectionChanged;
 

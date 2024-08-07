@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExpensesDemo.WpfUI"
+        xmlns:views="clr-namespace:ExpensesDemo.WpfUI.Views"
         mc:Ignorable="d"
         Title="Expenses Demo" Height="450" Width="800">
     <Grid Margin="10">
@@ -24,54 +25,69 @@
             </Button>
             <Border Width="1" Background="LightGray" Margin="0,2"/>
         </WrapPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <ListView Name="expensesList" Grid.Row="1"
+            <GridSplitter Grid.Column="1" ShowsPreview="False" Width="3" 
+              HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+            <ListView Name="expensesList" Grid.Column="0"
                   BorderThickness="0.1"
                   ItemsSource="{Binding ExpenseViewModels}"
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   SelectedItem="{Binding SelectedExpenseViewModel}"
                   SelectionMode="Single">
-                  
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />                   
-                </Style>
-            </ListView.ItemContainerStyle>
 
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Дата" Width="100">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock HorizontalAlignment="Left" Text="{Binding PaymentTime}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Тип затрат" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock HorizontalAlignment="Left" Text="{Binding Type}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Сумма" Width="75">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock HorizontalAlignment="Left" Text="{Binding Amount}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Описание">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock HorizontalAlignment="Left" Text="{Binding Description}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
 
-        </ListView>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Дата" Width="100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding PaymentTime}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Тип затрат" Width="150">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Type}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Сумма" Width="75">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Amount}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Описание">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Description}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+
+            </ListView>
+
+            <views:StatisticControl Grid.Column="2" DataContext="{Binding Statistic}"/>
+
+        </Grid>
+
+        
 
     </Grid>
 </Window>
