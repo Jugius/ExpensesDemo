@@ -12,6 +12,7 @@ internal class MainWindowVM : ViewModelBase
     private readonly ObservableCollection<ExpenseViewModel> _expenseViewModels;
     private readonly ExpensesStore _expensesStore;
     private ExpenseViewModel selectedExpenseViewModel;
+    public event Action RecordsCountChanged;
 
     public IEnumerable<ExpenseViewModel> ExpenseViewModels { get; }
     public ExpenseViewModel SelectedExpenseViewModel { get => selectedExpenseViewModel; set => Set(ref selectedExpenseViewModel, value); }
@@ -51,6 +52,7 @@ internal class MainWindowVM : ViewModelBase
         if (vm != null)
         {
             _expenseViewModels.Remove(vm);
+            RecordsCountChanged?.Invoke();
         }
     }
 
@@ -60,18 +62,24 @@ internal class MainWindowVM : ViewModelBase
         if(vm != null)
         {
             vm.Update(expense);
+            RecordsCountChanged?.Invoke();
         }
     }
 
-    private void ExpensesStore_ExpenseAdded(Expense expense) => AddExpense(expense);
+    private void ExpensesStore_ExpenseAdded(Expense expense)
+    {
+        AddExpense(expense);
+        RecordsCountChanged?.Invoke();
+    }
 
     private void ExpensesStore_ExpensesLoaded()
     {
         _expenseViewModels.Clear();
-        foreach (var expense in _expensesStore.Expenses)
+        foreach (var expense in _expensesStore.Expenses.OrderBy(a=>a.PaymentTime))
         {
            AddExpense(expense);
         }
+        RecordsCountChanged?.Invoke();
     }
 
     private void AddExpense(Expense expense)
@@ -83,6 +91,8 @@ internal class MainWindowVM : ViewModelBase
 
     protected override void Dispose()
     {
+        _expenseViewModels.CollectionChanged -= ExpenseViewModels_CollectionChanged;
+
         _expensesStore.ExpensesLoaded -= ExpensesStore_ExpensesLoaded;
         _expensesStore.ExpenseAdded -= ExpensesStore_ExpenseAdded;
         _expensesStore.ExpenseUpdated -= ExpensesStore_ExpenseUpdated;
