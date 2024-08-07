@@ -1,11 +1,12 @@
-﻿using System.Windows;
+﻿using ExpensesDemo.Application.Common.DTOs;
+using System.Windows;
 
 namespace ExpensesDemo.WpfUI.Services;
 
-class DialogService
+class DialogProvider
 {
     public Window DialogsOwner { get; }
-    public DialogService(Window dialogsOwner)
+    public DialogProvider(Window dialogsOwner)
     {
         DialogsOwner = dialogsOwner;
     }
@@ -28,4 +29,9 @@ class DialogService
             caption: caption,
             button: MessageBoxButton.YesNo,
             icon: MessageBoxImage.Question) == MessageBoxResult.Yes;
+
+    internal bool ShowAddEditExpenseDialog(ExpenseDto dto)
+    {
+        throw new NotImplementedException();
+    }
 }

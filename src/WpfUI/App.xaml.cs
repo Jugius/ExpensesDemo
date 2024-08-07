@@ -1,5 +1,7 @@
 ﻿using ExpensesDemo.Infrastructure.Services;
 using ExpensesDemo.WpfUI.Services;
+using ExpensesDemo.WpfUI.Stores;
+using ExpensesDemo.WpfUI.ViewModels;
 using System.IO;
 using System.Windows;
 
@@ -12,10 +14,14 @@ public partial class App : System.Windows.Application
     protected override void OnStartup(StartupEventArgs e)
     {
         this.MainWindow = new MainWindow();
-        DialogService dialogService = new DialogService(MainWindow);
+        DialogProvider dialogService = new DialogProvider(MainWindow);
 
         string file = Path.Combine(Environment.CurrentDirectory, "ExpensesDataset.json");
         JsonFileExpensesService expensesService = new JsonFileExpensesService(file);
+        ExpensesStore store = new ExpensesStore(expensesService);
+        MainWindowVM mainWindowViewModel = new MainWindowVM(dialogService, store);
+        this.MainWindow.DataContext = mainWindowViewModel;
+        this.MainWindow.Show();
         base.OnStartup(e);
     }
 }
