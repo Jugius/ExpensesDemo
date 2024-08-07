@@ -8,4 +8,6 @@ public class ExpenseDto
     public ExpenseType Type { get; set; }
     public decimal Amount { get; set; }
     public string Description { get; set; }
+
+    public static ExpenseDto Create() => new ExpenseDto { PaymentTime = DateTime.Now };
 }
