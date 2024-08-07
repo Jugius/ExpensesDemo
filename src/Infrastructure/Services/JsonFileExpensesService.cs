@@ -1,7 +1,7 @@
 ﻿using ExpensesDemo.Application.Common.DTOs;
 using ExpensesDemo.Application.Common.Interfaces;
+using ExpensesDemo.Application.Mappings;
 using ExpensesDemo.Domain.Entities;
-using ExpensesDemo.Infrastructure.Mappings;
 
 namespace ExpensesDemo.Infrastructure.Services;
 public class JsonFileExpensesService : IExpensesService

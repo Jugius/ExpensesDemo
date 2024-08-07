@@ -1,8 +1,8 @@
 ﻿using ExpensesDemo.Application.Common.DTOs;
 using ExpensesDemo.Domain.Entities;
 
-namespace ExpensesDemo.Infrastructure.Mappings;
-internal static class ExpenseDtoMapping
+namespace ExpensesDemo.Application.Mappings;
+public static class ExpenseDtoMapping
 {
     public static Expense MapToDomain(this ExpenseDto dto) =>
         new Expense
@@ -12,6 +12,15 @@ internal static class ExpenseDtoMapping
             Type = dto.Type,
             Amount = dto.Amount,
             Description = dto.Description,
+        };
+    public static ExpenseDto MapToDto(this Expense expense) =>
+        new ExpenseDto
+        {
+            Id = expense.Id,
+            PaymentTime = expense.PaymentTime,
+            Type = expense.Type,
+            Amount = expense.Amount,
+            Description = expense.Description,
         };
 
     public static void UpdateWith(this Expense expense, ExpenseDto dto)
